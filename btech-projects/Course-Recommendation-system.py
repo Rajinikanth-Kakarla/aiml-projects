@@ -1,22 +1,13 @@
-# Core Pkg
 import streamlit as st 
 import streamlit.components.v1 as stc 
 
-
-# Load EDA
 import pandas as pd 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity,linear_kernel
 
-
-# Load Our Dataset
 def load_data(data):
 	df = pd.read_csv(data)
 	return df 
-
-
-# Fxn
-# Vectorize + Cosine Similarity Matrix
 
 def vectorize_text_to_cosine_mat(data):
 	count_vect = CountVectorizer()
@@ -25,23 +16,18 @@ def vectorize_text_to_cosine_mat(data):
 	cosine_sim_mat = cosine_similarity(cv_mat)
 	return cosine_sim_mat
 
-
-
-# Recommendation Sys
 @st.cache
 def get_recommendation(title,cosine_sim_mat,df,num_of_rec=10):
-	# indices of the course
+	
 	course_indices = pd.Series(df.index,index=df['course_title']).drop_duplicates()
-	# Index of course
+
 	idx = course_indices[title]
 
-	# Look into the cosine matr for that index
 	sim_scores =list(enumerate(cosine_sim_mat[idx]))
 	sim_scores = sorted(sim_scores,key=lambda x: x[1],reverse=True)
 	selected_course_indices = [i[0] for i in sim_scores[1:]]
 	selected_course_scores = [i[0] for i in sim_scores[1:]]
 
-	# Get the dataframe & title
 	result_df = df.iloc[selected_course_indices]
 	result_df['similarity_score'] = selected_course_scores
 	final_recommended_courses = result_df[['course_title','similarity_score','url','price','num_subscribers']]
@@ -61,7 +47,6 @@ box-shadow:0 0 15px 5px #ccc; background-color: #a8f0c6;
 </div>
 """
 
-# Search For Course 
 @st.cache
 def search_term_if_not_found(term,df):
 	result_df = df[df['course_title'].str.contains(term)]
@@ -102,7 +87,6 @@ def main():
 						rec_price = row[1][3]
 						rec_num_sub = row[1][4]
 
-						# st.write("Title",rec_title,)
 						stc.html(RESULT_TEMP.format(rec_title,rec_score,rec_url,rec_url,rec_num_sub),height=350)
 				except:
 					results= "Not Found"
@@ -112,18 +96,9 @@ def main():
 					st.dataframe(result_df)
 
 
-
-				# How To Maximize Your Profits Options Trading
-
-
-
-
 	else:
 		st.subheader("About")
 		st.text("Built with Streamlit & Pandas")
 
-
 if __name__ == '__main__':
 	main()
-
-
