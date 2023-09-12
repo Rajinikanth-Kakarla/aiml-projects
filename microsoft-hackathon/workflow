@@ -1,0 +1,6 @@
+parser -->  args --> url[base_url,api_Key] --> 
+                                    response[url] --yes-->
+                                                  ---no--> NOT FOUND
+fetch == data[main, temp, feels_like, weather, description, icon, name, sys, country, city]
+            --yes--> online server[fetch]
+                                    --output-->
