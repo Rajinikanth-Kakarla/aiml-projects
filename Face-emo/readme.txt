@@ -21,3 +21,7 @@ A basic face emotion detection project using OpenCV is a fascinating application
 10. User Interface: To make the project user-friendly, a graphical user interface (GUI) can be built to display the results, making it accessible to a wider audience.
 
 A basic face emotion detection project using OpenCV is an exciting exploration of computer vision and machine learning, offering practical applications in fields like human-computer interaction, sentiment analysis, and even mental health assessment. This project lays the groundwork for more advanced emotion recognition systems and opens doors to a wide range of applications in diverse industries.
+
+
+Dataset:
+https://www.kaggle.com/datasets/ananthu017/emotion-detection-fer
